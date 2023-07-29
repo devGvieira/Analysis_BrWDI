@@ -1,4 +1,4 @@
-# Analysis of Recent Selected Development Indicators of Brazil
+# Analysis of Recent Development Indicators of Brazil
 
 The present study has been conducted merely for study related reasons, more specifically, understanding how to use Python to read, clean, operate and draw conclusions from databases.
 
