@@ -1,4 +1,4 @@
-# Analysis of Brazilian Development Indicators
+# Analysis of Brazil's Development Indicators
 
 The present study has been conducted to understand the temporal evolution of Brazil's development indicators during the last decade, in this work the author has wrangled a dataset from The World Bank's DataBank and also developed a dashboard for better visualization of this work's results.
 
