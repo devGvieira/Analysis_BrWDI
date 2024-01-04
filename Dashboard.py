@@ -7,7 +7,23 @@ df_original = pd.read_csv('Data_Wrangled.csv')
 df = df_original.iloc[3:,:]
 df = df.drop('Unnamed: 0', axis=1)
 
-st.write('Exploratory Analysis')
+st.set_page_config(page_title="Sales Dashboard", page_icon=":bar_chart:", layout="wide")
+
+st.title(':bar_chart: Exploratory Analysis')
+st.markdown("##")
+
+left_column, middle_column, right_column = st.columns(3)
+
+with left_column:
+    st.subheader('Left Column')
+
+with middle_column:
+    st.subheader('Middle Column')
+
+with right_column:
+    st.subheader('Right Column')
+
+st.markdown("""---""")
 
 fig = go.Figure()
 
@@ -21,7 +37,7 @@ fig.update_layout(
     title='<b>Population Over the Years</b>',
     xaxis_title='<b>Year</b>',
     yaxis_title='<b>Total Population</b>',
-    title_font=dict(size=50),
+    title_font=dict(size=40),
     xaxis=dict(showgrid=True,
         gridwidth=1, 
         gridcolor='LightGray',
@@ -39,6 +55,5 @@ fig.update_layout(
         )
 )
 
-fig.show()
+left_column.plotly_chart(fig, use_container_width=True)
 
-st.pyplot(fig)
