@@ -59,7 +59,7 @@ population.add_trace(go.Bar(x=df.iloc[:,0],
 population.update_layout(
     title='<b>Population</b>',
     xaxis_title='<b>Year</b>',
-    yaxis_title='<b>Total Population</b>',
+    yaxis_title='<b>Number of People</b>',
     title_font=dict(size=20),
     xaxis=dict(showgrid=True,
         gridwidth=1, 
@@ -109,6 +109,70 @@ urban_pop.update_layout(
         )
 )
 
+poverty = go.Figure()
+
+poverty.add_trace(go.Line(x=df.iloc[:,0], 
+                     y=df.loc[:,'Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)'], 
+                     name='Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)',
+                     line=dict(
+                         color='rgb(72, 202, 228)',
+                         width=5
+                     )
+                     ))
+
+poverty.update_layout(
+    title='<b>Poverty - Headcount Ratio at $2.15 a Day (2017 Purchasing Power Parity)</b>',
+    xaxis_title='<b>Year</b>',
+    yaxis_title='<b> Number of People',
+    title_font=dict(size=20),
+    xaxis=dict(showgrid=True,
+        gridwidth=1, 
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        tickvals=df.iloc[:, 0]
+        ),
+    yaxis=dict(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        )
+)
+
+density = go.Figure()
+
+density.add_trace(go.Line(x=df.iloc[:,0], 
+                     y=df.loc[:,'Population density (people per sq. km of land area)'], 
+                     name='Population density (people per sq. km of land area)',
+                     line=dict(
+                         color='rgb(72, 202, 228)',
+                         width=5
+                     )
+                     ))
+
+density.update_layout(
+    title='<b>Population density (people per sq. km of land area)</b>',
+    xaxis_title='<b>Year</b>',
+    yaxis_title='<b> People per Sq. km of Land Area',
+    title_font=dict(size=20),
+    xaxis=dict(showgrid=True,
+        gridwidth=1, 
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        tickvals=df.iloc[:, 0]
+        ),
+    yaxis=dict(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        )
+)
+
 st.sidebar.header('Demography')
 st.sidebar.write("This page displays the temporal evolution of Brazil's demography.")
 
@@ -120,3 +184,8 @@ left_column.plotly_chart(population, use_container_width=True)
 
 right_column.plotly_chart(urban_pop, use_container_width=True)
 
+left_column_2, right_column_2 = st.columns(2)
+
+left_column_2.plotly_chart(poverty, use_container_width=True)
+
+right_column_2.plotly_chart(density, use_container_width=True)

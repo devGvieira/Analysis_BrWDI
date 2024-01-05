@@ -62,7 +62,7 @@ forest.add_trace(go.Line(x=df.iloc[:,0],
 forest.update_layout(
     title='<b>Forest Area</b>',
     xaxis_title='<b>Year</b>',
-    yaxis_title='<b>Forest Area (sq. km)</b>',
+    yaxis_title='<b>Area (sq. km)</b>',
     title_font=dict(size=20),
     xaxis=dict(showgrid=True,
         gridwidth=1, 
@@ -112,13 +112,83 @@ emission.update_layout(
         )
 )
 
+energy = go.Figure()
+
+energy.add_trace(go.Line(x=df.iloc[:,0], 
+                     y=df.loc[:,'Electric power consumption (kWh per capita)'], 
+                     name='Electric power consumption (kWh per capita)',
+                     line=dict(
+                         color='rgb(72, 202, 228)',
+                         width=5
+                     )
+                     ))
+
+energy.update_layout(
+    title='<b>Electric Power Consumption per Capita</b>',
+    xaxis_title='<b>Year</b>',
+    yaxis_title='<b>kWh per capita</b>',
+    title_font=dict(size=20),
+    xaxis=dict(showgrid=True,
+        gridwidth=1, 
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        tickvals=df.iloc[:, 0]
+        ),
+    yaxis=dict(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        )
+)
+
+protected = go.Figure()
+
+protected.add_trace(go.Line(x=df.iloc[:,0], 
+                     y=df.loc[:,'Terrestrial and marine protected areas (% of total territorial area)'], 
+                     name='Terrestrial and marine protected areas (% of total territorial area)',
+                     line=dict(
+                         color='rgb(72, 202, 228)',
+                         width=5
+                     )
+                     ))
+
+protected.update_layout(
+    title='<b>Terrestrial and Marine Protected Areas</b>',
+    xaxis_title='<b>Year</b>',
+    yaxis_title='<b>Percentage of Total Territorial Area</b>',
+    title_font=dict(size=20),
+    xaxis=dict(showgrid=True,
+        gridwidth=1, 
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        tickvals=df.iloc[:, 0]
+        ),
+    yaxis=dict(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        )
+)
+
 st.sidebar.header('Management of Nature')
 st.sidebar.write('This page displays the temporal evolution of Brazilian development indicators related to nature.')
 
-st.title('Nature Handling Over Time')
+st.title('Nature Management Over Time')
 
 left_column, right_column = st.columns(2)
 
 left_column.plotly_chart(forest, use_container_width=True)
 
 right_column.plotly_chart(emission, use_container_width=True)
+
+left_column_2, right_column_2 = st.columns(2)
+
+left_column_2.plotly_chart(protected, use_container_width=True)
+
+right_column_2.plotly_chart(energy, use_container_width=True)

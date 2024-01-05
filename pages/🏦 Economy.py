@@ -62,7 +62,7 @@ gdp.add_trace(go.Line(x=df.iloc[:,0],
 gdp.update_layout(
     title='<b>Gross Domestic Product (GDP)</b>',
     xaxis_title='<b>Year</b>',
-    yaxis_title='<b>GDP (Current US$)</b>',
+    yaxis_title='<b> Dollars</b>',
     title_font=dict(size=20),
     xaxis=dict(showgrid=True,
         gridwidth=1, 
@@ -113,13 +113,83 @@ share.update_layout(
         )
 )
 
+gni = go.Figure()
+
+gni.add_trace(go.Line(x=df.iloc[:,0], 
+                     y=df.loc[:,'GNI, PPP (current international $)'], 
+                     name='GNI, PPP (current international $)',
+                     line=dict(
+                         color='rgb(72, 202, 228)',
+                         width=5
+                     )
+                     ))
+
+gni.update_layout(
+    title='<b>Gross National Income (GNI) Based on Purchasing Power Parity</b>',
+    xaxis_title='<b>Year</b>',
+    yaxis_title='<b> Dollars',
+    title_font=dict(size=20),
+    xaxis=dict(showgrid=True,
+        gridwidth=1, 
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        tickvals=df.iloc[:, 0]
+        ),
+    yaxis=dict(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        )
+)
+
+gni_pc = go.Figure()
+
+gni_pc.add_trace(go.Line(x=df.iloc[:,0], 
+                     y=df.loc[:,'GNI per capita, PPP (current international $)'], 
+                     name='GNI per capita, PPP (current international $)',
+                     line=dict(
+                         color='rgb(72, 202, 228)',
+                         width=5
+                     )
+                     ))
+
+gni_pc.update_layout(
+    title='<b>Gross National Income (GNI) per Capita Based on Purchasing Power Parity</b>',
+    xaxis_title='<b>Year</b>',
+    yaxis_title='<b> Dollars',
+    title_font=dict(size=20),
+    xaxis=dict(showgrid=True,
+        gridwidth=1, 
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        tickvals=df.iloc[:, 0]
+        ),
+    yaxis=dict(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='LightGray',
+        title_font=dict(size=16),
+        tickfont=dict(size=12),
+        )
+)
+
 st.sidebar.header('Economical Aspects')
 st.sidebar.write('This page displays the temporal evolution of Brazilian development indicators on the economical sphere.')
 
 st.title('Economy Over Time')
 
-left_column, right_column = st.columns(2)
+left_column_1, right_column_1 = st.columns(2)
 
-left_column.plotly_chart(gdp, use_container_width=True)
+left_column_1.plotly_chart(gdp, use_container_width=True)
 
-right_column.plotly_chart(share, use_container_width=True)
+right_column_1.plotly_chart(gni, use_container_width=True)
+
+left_column_2, right_column_2 = st.columns(2)
+
+left_column_2.plotly_chart(gni_pc, use_container_width=True)
+
+right_column_2.plotly_chart(share, use_container_width=True)
