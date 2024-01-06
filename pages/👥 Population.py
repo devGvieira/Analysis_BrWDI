@@ -123,7 +123,7 @@ poverty.add_trace(go.Line(x=df.iloc[:,0],
 poverty.update_layout(
     title='<b>Poverty - Headcount Ratio at $2.15 a Day (2017 Purchasing Power Parity)</b>',
     xaxis_title='<b>Year</b>',
-    yaxis_title='<b> Number of People',
+    yaxis_title='<b> Percentage of Population </b>',
     title_font=dict(size=20),
     xaxis=dict(showgrid=True,
         gridwidth=1, 
@@ -153,7 +153,7 @@ density.add_trace(go.Line(x=df.iloc[:,0],
                      ))
 
 density.update_layout(
-    title='<b>Population density (people per sq. km of land area)</b>',
+    title='<b>Population Density</b>',
     xaxis_title='<b>Year</b>',
     yaxis_title='<b> People per Sq. km of Land Area',
     title_font=dict(size=20),
