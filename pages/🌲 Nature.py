@@ -48,147 +48,258 @@ df = df_original.iloc[3:,:]
 df.columns = header
 df = df.drop(0, axis=1)
 
-forest = go.Figure()
-
-forest.add_trace(go.Line(x=df.iloc[:,0], 
-                     y=df.loc[:,'Forest area (sq. km)'], 
-                     name='Forest area (sq. km)',
-                     line=dict(
-                         color='rgb(72, 202, 228)',
-                         width=5
-                     )
-                     ))
-
-forest.update_layout(
-    title='<b>Forest Area</b>',
-    xaxis_title='<b>Year</b>',
-    yaxis_title='<b>Area (sq. km)</b>',
-    title_font=dict(size=20),
-    xaxis=dict(showgrid=True,
-        gridwidth=1, 
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        tickvals=df.iloc[:, 0]
-        ),
-    yaxis=dict(
-        showgrid=True,
-        gridwidth=1,
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
+def scatter_plot(plot_title, x_axis, y_axis, name_, title_, y_title):
+    plot_title.add_trace(go.Scatter(
+        x=x_axis,
+        y=y_axis,
+        mode='markers',
+        name=name_,
+        marker=dict(
+            color='rgb(72, 202, 228)',
+            size=16
         )
-)
+    ))
 
-emission = go.Figure()
-
-emission.add_trace(go.Line(x=df.iloc[:,0], 
-                     y=df.loc[:,'CO2 emissions (metric tons per capita)'], 
-                     name='CO2 emissions (metric tons per capita)',
-                     line=dict(
-                         color='rgb(72, 202, 228)',
-                         width=5
-                     )
-                     ))
-
-emission.update_layout(
-    title='<b>CO2 Emissions</b>',
-    xaxis_title='<b>Year</b>',
-    yaxis_title='<b>Emission (metric tons per capita)</b>',
-    title_font=dict(size=20),
-    xaxis=dict(showgrid=True,
-        gridwidth=1, 
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        tickvals=df.iloc[:, 0]
+    plot_title.update_layout(
+        title=title_,
+        xaxis_title='<b>Year</b>',
+        yaxis_title=y_title,
+        title_font=dict(size=20),
+        xaxis=dict(
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            tickfont=dict(size=12),
+            tickvals=df.iloc[:, 0]
         ),
-    yaxis=dict(
-        showgrid=True,
-        gridwidth=1,
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
+        yaxis=dict(
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            tickfont=dict(size=12),
         )
-)
+    )
 
-energy = go.Figure()
+def line_plot(plot_title, x_axis, y_axis, name_, title_, y_title):
 
-energy.add_trace(go.Line(x=df.iloc[:,0], 
-                     y=df.loc[:,'Electric power consumption (kWh per capita)'], 
-                     name='Electric power consumption (kWh per capita)',
-                     line=dict(
-                         color='rgb(72, 202, 228)',
-                         width=5
-                     )
-                     ))
+    plot_title.add_trace(go.Scatter(
+        x=x_axis, 
+        y=y_axis, 
+        name=name_,
+        mode='lines',
+        line=dict(
+            color='rgb(72, 202, 228)',
+            width=5
+        )
+    ))
 
-energy.update_layout(
-    title='<b>Electric Power Consumption per Capita</b>',
-    xaxis_title='<b>Year</b>',
-    yaxis_title='<b>kWh per capita</b>',
-    title_font=dict(size=20),
-    xaxis=dict(showgrid=True,
-        gridwidth=1, 
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        tickvals=df.iloc[:, 0]
+    plot_title.update_layout(
+        title=title_,
+        xaxis_title='<b>Year</b>',
+        yaxis_title=y_title,
+        title_font=dict(size=20),
+        xaxis=dict(
+            showgrid=True,
+            gridwidth=1, 
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            tickfont=dict(size=12),
+            tickvals=df.iloc[:, 0]
         ),
-    yaxis=dict(
-        showgrid=True,
-        gridwidth=1,
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        )
-)
-
-protected = go.Figure()
-
-protected.add_trace(go.Line(x=df.iloc[:,0], 
-                     y=df.loc[:,'Terrestrial and marine protected areas (% of total territorial area)'], 
-                     name='Terrestrial and marine protected areas (% of total territorial area)',
-                     line=dict(
-                         color='rgb(72, 202, 228)',
-                         width=5
-                     )
-                     ))
-
-protected.update_layout(
-    title='<b>Terrestrial and Marine Protected Areas</b>',
-    xaxis_title='<b>Year</b>',
-    yaxis_title='<b>Percentage of Total Territorial Area</b>',
-    title_font=dict(size=20),
-    xaxis=dict(showgrid=True,
-        gridwidth=1, 
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        tickvals=df.iloc[:, 0]
+        yaxis=dict(
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            tickfont=dict(size=12),
         ),
-    yaxis=dict(
-        showgrid=True,
-        gridwidth=1,
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        )
-)
+        showlegend=False
+    )
+
+def bar_plot(plot_title, x_axis, y_axis, name_, title_, y_title, y_axis_min, y_axis_max):
+
+    plot_title.add_trace(go.Bar(x=x_axis, 
+                        y=y_axis, 
+                        name=name_,
+                        marker_color='rgb(72, 202, 228)'
+                        ))
+
+    plot_title.update_layout(
+        title=title_,
+        xaxis_title='<b>Year</b>',
+        yaxis_title=y_title,
+        title_font=dict(size=20),
+        xaxis=dict(showgrid=True,
+            gridwidth=1, 
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            tickfont=dict(size=12),
+            tickvals=df.iloc[:, 0]
+            ),
+        yaxis=dict(
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            tickfont=dict(size=12),
+            range=[y_axis_min, y_axis_max]
+            )
+    )
+
+forest_scatter = go.Figure()
+forest_line = go.Figure()
+forest_bar = go.Figure()
+scatter_plot(forest_scatter,
+             df.iloc[:,0], df.loc[:,'Forest area (sq. km)'],
+            'Forest area (sq. km)',
+            '<b>Forest Area</b>',
+            '<b>Area (sq. km)</b>')
+line_plot(forest_line, df.iloc[:,0],
+          df.loc[:,'Forest area (sq. km)'],
+          'Forest area (sq. km)',
+          '<b>Forest Area</b>',
+          '<b>Area (sq. km)</b>')
+bar_plot(forest_bar, df.iloc[:,0],
+         df.loc[:,'Forest area (sq. km)'],
+         'Forest area (sq. km)',
+         '<b>Forest Area</b>',
+         '<b>Area (sq. km)</b>',
+         df.loc[:,'Forest area (sq. km)'].astype(float).min(),
+         df.loc[:,'Forest area (sq. km)'].astype(float).max())
+
+
+emission_scatter = go.Figure()
+emission_line = go.Figure()
+emission_bar = go.Figure()
+scatter_plot(emission_scatter,
+             df.iloc[:,0],
+             df.loc[:,'CO2 emissions (metric tons per capita)'],
+             'CO2 emissions (metric tons per capita)',
+             '<b>CO2 Emissions</b>',
+             '<b>Emission (metric tons per capita)</b>')
+line_plot(emission_line, 
+          df.iloc[:,0],
+          df.loc[:,'CO2 emissions (metric tons per capita)'],
+          'CO2 emissions (metric tons per capita)',
+          '<b>CO2 Emissions</b>',
+          '<b>Emission (metric tons per capita)</b>')
+bar_plot(emission_bar,
+         df.iloc[:,0],
+         df.loc[:,'CO2 emissions (metric tons per capita)'],
+         'CO2 emissions (metric tons per capita)',
+         '<b>CO2 Emissions</b>',
+         '<b>Emission (metric tons per capita)</b>',
+         df.loc[:,'CO2 emissions (metric tons per capita)'].astype(float).min(),
+         df.loc[:,'CO2 emissions (metric tons per capita)'].astype(float).max())
+
+energy_scatter = go.Figure()
+energy_line = go.Figure()
+energy_bar = go.Figure()
+scatter_plot(energy_scatter, df.iloc[:,0],
+             df.loc[:,'Electric power consumption (kWh per capita)'],
+             'Electric power consumption (kWh per capita)',
+             '<b>Electric Power Consumption per Capita</b>',
+             '<b>kWh per capita</b>')
+line_plot(energy_line, df.iloc[:,0],
+          df.loc[:,'Electric power consumption (kWh per capita)'],
+          'Electric power consumption (kWh per capita)',
+          '<b>Electric Power Consumption per Capita</b>',
+          '<b>kWh per capita</b>')
+bar_plot(energy_bar, df.iloc[:,0],
+         df.loc[:,'Electric power consumption (kWh per capita)'],
+         'Electric power consumption (kWh per capita)',
+         '<b>Electric Power Consumption per Capita</b>',
+         '<b>kWh per capita</b>',
+          df.loc[:,'Electric power consumption (kWh per capita)'].astype(float).min(),
+        df.loc[:,'Electric power consumption (kWh per capita)'].astype(float).max())
+
+protected_scatter = go.Figure()
+protected_line = go.Figure()
+protected_bar = go.Figure()
+scatter_plot(protected_scatter,
+             df.iloc[:,0],
+             df.loc[:,'Terrestrial and marine protected areas (% of total territorial area)'],
+             'Terrestrial and marine protected areas (% of total territorial area)',
+             '<b>Terrestrial and Marine Protected Areas</b>',
+             '<b>Percentage of Total Territorial Area</b>')
+line_plot(protected_line, df.iloc[:,0],
+          df.loc[:,'Terrestrial and marine protected areas (% of total territorial area)'],
+          'Terrestrial and marine protected areas (% of total territorial area)',
+          '<b>Terrestrial and Marine Protected Areas</b>',
+          '<b>Percentage of Total Territorial Area</b>' )
+bar_plot(protected_bar, df.iloc[:,0],
+         df.loc[:,'Terrestrial and marine protected areas (% of total territorial area)'],
+         'Terrestrial and marine protected areas (% of total territorial area)',
+         '<b>Terrestrial and Marine Protected Areas</b>',
+         '<b>Percentage of Total Territorial Area</b>',
+         df.loc[:,'Terrestrial and marine protected areas (% of total territorial area)'].astype(float).min(),
+         df.loc[:,'Terrestrial and marine protected areas (% of total territorial area)'].astype(float).max())
 
 st.sidebar.header('Management of Nature')
 st.sidebar.write('This page displays the temporal evolution of Brazilian development indicators related to nature.')
 
 st.title('Nature Management Over Time')
 
-left_column, right_column = st.columns(2)
+tab_1, tab_2, tab_3, tab_4 = st.tabs(["Forest", "CO2 Emissions", "Protected Areas", "Electric Power Consumption"])
 
-left_column.plotly_chart(forest, use_container_width=True)
+with tab_1:
+    option = st.selectbox(
+    "Select the type of graph to be displayed",
+    ('Scatter', 'Line', 'Bar'),
+    index=None,
+    placeholder='Choose an option',
+    key=1
+)
+    if option == "Scatter":
+        st.plotly_chart(forest_scatter, use_container_width=True)
+    elif option == "Line":
+        st.plotly_chart(forest_line, use_container_width=True)
+    elif option == "Bar":
+        st.plotly_chart(forest_bar, use_container_width=True)
 
-right_column.plotly_chart(emission, use_container_width=True)
+with tab_2:
+    option = st.selectbox(
+    "Select the type of graph to be displayed",
+    ('Scatter', 'Line', 'Bar'),
+    index=None,
+    placeholder='Choose an option',
+    key=2
+)
+    if option == "Scatter":
+        st.plotly_chart(emission_scatter, use_container_width=True)
+    elif option == "Line":
+        st.plotly_chart(emission_line, use_container_width=True)
+    elif option == "Bar":
+        st.plotly_chart(emission_bar, use_container_width=True)
 
-left_column_2, right_column_2 = st.columns(2)
+with tab_3:
+    option = st.selectbox(
+    "Select the type of graph to be displayed",
+    ('Scatter', 'Line', 'Bar'),
+    index=None,
+    placeholder='Choose an option',
+    key=3
+)
+    if option == "Scatter":
+        st.plotly_chart(protected_scatter, use_container_width=True)
+    elif option == "Line":
+        st.plotly_chart(protected_line, use_container_width=True)
+    elif option == "Bar":
+        st.plotly_chart(protected_bar, use_container_width=True)
 
-left_column_2.plotly_chart(protected, use_container_width=True)
-
-right_column_2.plotly_chart(energy, use_container_width=True)
+with tab_4:
+    option = st.selectbox(
+    "Select the type of graph to be displayed",
+    ('Scatter', 'Line', 'Bar'),
+    index=None,
+    placeholder='Choose an option',
+    key=4
+)
+    if option == "Scatter":
+        st.plotly_chart(energy_scatter, use_container_width=True)
+    elif option == "Line":
+        st.plotly_chart(energy_line, use_container_width=True)
+    elif option == "Bar":
+        st.plotly_chart(energy_bar, use_container_width=True)

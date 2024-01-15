@@ -48,152 +48,269 @@ df = df_original.iloc[3:,:]
 df.columns = header
 df = df.drop(0, axis=1)
 
-population = go.Figure()
-
-population.add_trace(go.Bar(x=df.iloc[:,0], 
-                     y=df.iloc[:,1], 
-                     name='Population',
-                     marker_color='rgb(72, 202, 228)'
-                     ))
-
-population.update_layout(
-    title='<b>Population</b>',
-    xaxis_title='<b>Year</b>',
-    yaxis_title='<b>Number of People</b>',
-    title_font=dict(size=20),
-    xaxis=dict(showgrid=True,
-        gridwidth=1, 
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        tickvals=df.iloc[:, 0]
-        ),
-    yaxis=dict(
-        showgrid=True,
-        gridwidth=1,
-        gridcolor='LightGray',
-        range=[200_000_000, df.iloc[:, 1].max()],
-        title_font=dict(size=16),
-        tickfont=dict(size=12)
+def scatter_plot(plot_title, x_axis, y_axis, name_, title_, y_title):
+    plot_title.add_trace(go.Scatter(
+        x=x_axis,
+        y=y_axis,
+        mode='markers',
+        name=name_,
+        marker=dict(
+            color='rgb(72, 202, 228)',
+            size=16
         )
-)
+    ))
 
-urban_pop = go.Figure()
-
-urban_pop.add_trace(go.Bar(x=df.iloc[:,0], 
-                     y=df.loc[:,'Urban population growth (annual %)'], 
-                     name='Urban population growth (annual %)',
-                     marker_color='rgb(72, 202, 228)'
-                     ))
-
-urban_pop.update_yaxes(range=[0.6,1.2])
-
-urban_pop.update_layout(
-    title='<b>Urban Population Growth</b>',
-    xaxis_title='<b>Year</b>',
-    yaxis_title='<b>Growth (annual %)</b>',
-    title_font=dict(size=20),
-    xaxis=dict(showgrid=True,
-        gridwidth=1, 
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        tickvals=df.iloc[:, 0]
+    plot_title.update_layout(
+        title=title_,
+        xaxis_title='<b>Year</b>',
+        yaxis_title=y_title,
+        title_font=dict(size=20),
+        xaxis=dict(
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            tickfont=dict(size=12),
+            tickvals=df.iloc[:, 0]
         ),
-    yaxis=dict(
-        showgrid=True,
-        gridwidth=1,
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12)
+        yaxis=dict(
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            tickfont=dict(size=12),
         )
-)
+    )
 
-poverty = go.Figure()
+def line_plot(plot_title, x_axis, y_axis, name_, title_, y_title):
 
-poverty.add_trace(go.Line(x=df.iloc[:,0], 
-                     y=df.loc[:,'Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)'], 
-                     name='Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)',
-                     line=dict(
-                         color='rgb(72, 202, 228)',
-                         width=5
-                     )
-                     ))
+    plot_title.add_trace(go.Scatter(
+        x=x_axis, 
+        y=y_axis, 
+        name=name_,
+        mode='lines',
+        line=dict(
+            color='rgb(72, 202, 228)',
+            width=5
+        )
+    ))
 
-poverty.update_layout(
-    title='<b>Poverty - Headcount Ratio at $2.15 a Day (2017 Purchasing Power Parity)</b>',
-    xaxis_title='<b>Year</b>',
-    yaxis_title='<b> Percentage of Population </b>',
-    title_font=dict(size=20),
-    xaxis=dict(showgrid=True,
-        gridwidth=1, 
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        tickvals=df.iloc[:, 0]
+    plot_title.update_layout(
+        title=title_,
+        xaxis_title='<b>Year</b>',
+        yaxis_title=y_title,
+        title_font=dict(size=20),
+        xaxis=dict(
+            showgrid=True,
+            gridwidth=1, 
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            tickfont=dict(size=12),
+            tickvals=df.iloc[:, 0]
         ),
-    yaxis=dict(
-        showgrid=True,
-        gridwidth=1,
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        )
-)
-
-density = go.Figure()
-
-density.add_trace(go.Line(x=df.iloc[:,0], 
-                     y=df.loc[:,'Population density (people per sq. km of land area)'], 
-                     name='Population density (people per sq. km of land area)',
-                     line=dict(
-                         color='rgb(72, 202, 228)',
-                         width=5
-                     )
-                     ))
-
-density.update_layout(
-    title='<b>Population Density</b>',
-    xaxis_title='<b>Year</b>',
-    yaxis_title='<b> People per Sq. km of Land Area',
-    title_font=dict(size=20),
-    xaxis=dict(showgrid=True,
-        gridwidth=1, 
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        tickvals=df.iloc[:, 0]
+        yaxis=dict(
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            tickfont=dict(size=12),
         ),
-    yaxis=dict(
-        showgrid=True,
-        gridwidth=1,
-        gridcolor='LightGray',
-        title_font=dict(size=16),
-        tickfont=dict(size=12),
-        )
-)
+        showlegend=False
+    )
+
+def bar_plot(plot_title, x_axis, y_axis, name_, title_, y_title, y_axis_min, y_axis_max):
+
+    plot_title.add_trace(go.Bar(x=x_axis, 
+                        y=y_axis, 
+                        name=name_,
+                        marker_color='rgb(72, 202, 228)'
+                        ))
+
+    plot_title.update_layout(
+        title=title_,
+        xaxis_title='<b>Year</b>',
+        yaxis_title=y_title,
+        title_font=dict(size=20),
+        xaxis=dict(showgrid=True,
+            gridwidth=1, 
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            tickfont=dict(size=12),
+            tickvals=df.iloc[:, 0]
+            ),
+        yaxis=dict(
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='LightGray',
+            title_font=dict(size=16),
+            range=[y_axis_min, y_axis_max]
+            )
+    )
+
+population_scatter =  go.Figure()
+population_line = go.Figure()
+population_bar =  go.Figure()
+scatter_plot(population_scatter,
+             df.iloc[:,0],
+            df.iloc[:,1],
+            'Population',
+            '<b>Population</b>',
+            '<b>Number of People</b>'
+            )
+line_plot(population_line,
+             df.iloc[:,0],
+            df.iloc[:,1],
+            'Population',
+            '<b>Population</b>',
+            '<b>Number of People</b>')
+bar_plot(population_bar,
+             df.iloc[:,0],
+            df.iloc[:,1],
+            'Population',
+            '<b>Population</b>',
+            '<b>Number of People</b>',
+            df.iloc[:,1].astype(float).min(),
+            df.iloc[:,1].astype(float).max())
+
+urban_pop_scatter =  go.Figure()
+urban_pop_line =  go.Figure()
+urban_pop_bar =  go.Figure()
+scatter_plot(urban_pop_scatter,
+             df.iloc[:,0],
+             df.loc[:,'Urban population growth (annual %)'],
+             'Urban population growth (annual %)',
+             '<b>Urban Population Growth</b>',
+             '<b>Growth (annual %)</b>'
+             )
+line_plot(urban_pop_line,
+             df.iloc[:,0],
+             df.loc[:,'Urban population growth (annual %)'],
+             'Urban population growth (annual %)',
+             '<b>Urban Population Growth</b>',
+             '<b>Growth (annual %)</b>')
+bar_plot(urban_pop_bar,
+             df.iloc[:,0],
+             df.loc[:,'Urban population growth (annual %)'],
+             'Urban population growth (annual %)',
+             '<b>Urban Population Growth</b>',
+             '<b>Growth (annual %)</b>',
+             df.loc[:,'Urban population growth (annual %)'].astype(float).min(),
+             df.loc[:,'Urban population growth (annual %)'].astype(float).max())
+
+density_scatter =  go.Figure()
+density_line =  go.Figure()
+density_bar =  go.Figure()
+scatter_plot(density_scatter,
+             df.iloc[:,0],
+             df.loc[:,'Population density (people per sq. km of land area)'],
+            'Population density (people per sq. km of land area)',
+            '<b>Population Density</b>',
+            '<b> People per Sq. km of Land Area'
+             )
+line_plot(density_line,
+             df.iloc[:,0],
+             df.loc[:,'Population density (people per sq. km of land area)'],
+            'Population density (people per sq. km of land area)',
+            '<b>Population Density</b>',
+            '<b> People per Sq. km of Land Area')
+
+bar_plot(density_bar,
+             df.iloc[:,0],
+             df.loc[:,'Population density (people per sq. km of land area)'],
+            'Population density (people per sq. km of land area)',
+            '<b>Population Density</b>',
+            '<b> People per Sq. km of Land Area',
+            df.loc[:,'Population density (people per sq. km of land area)'].astype(float).min(),
+            df.loc[:,'Population density (people per sq. km of land area)'].astype(float).max())
+
+poverty_scatter =  go.Figure()
+poverty_line =  go.Figure()
+poverty_bar =  go.Figure()
+scatter_plot(poverty_scatter,
+             df.iloc[:,0],
+             df.loc[:,'Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)'],
+             'Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)',
+             '<b>Poverty - Headcount Ratio at $2.15 a Day (2017 Purchasing Power Parity)</b>',
+             '<b> Percentage of Population </b>'
+             )
+line_plot(poverty_line,
+             df.iloc[:,0],
+             df.loc[:,'Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)'],
+             'Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)',
+             '<b>Poverty - Headcount Ratio at $2.15 a Day (2017 Purchasing Power Parity)</b>',
+             '<b> Percentage of Population </b>')
+bar_plot(poverty_bar,
+             df.iloc[:,0],
+             df.loc[:,'Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)'],
+             'Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)',
+             '<b>Poverty - Headcount Ratio at $2.15 a Day (2017 Purchasing Power Parity)</b>',
+             '<b> Percentage of Population </b>',
+             df.loc[:,'Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)'].astype(float).min(),
+             df.loc[:,'Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population)'].astype(float).max())
 
 st.sidebar.header('Demography')
 st.sidebar.write("This page displays the temporal evolution of Brazil's demography.")
 
 st.header('Population Over Time')
 
-option = st.selectbox(
-    "Select the graph to be displayed",
-    ('Population', 'Urban Population', 'Population Density', 'Poverty'),
+tab_1, tab_2, tab_3, tab_4 = st.tabs(["Population", "Urban Population", "Population Density", "Poverty"])
+
+with tab_1:
+    option = st.selectbox(
+    "Select the type of graph to be displayed",
+    ('Scatter', 'Line', 'Bar'),
     index=None,
-    placeholder='Choose an option'
-
+    placeholder='Choose an option',
+    key=1
 )
+    if option == "Scatter":
+        st.plotly_chart(population_scatter, use_container_width=True)
+    elif option == "Line":
+        st.plotly_chart(population_line, use_container_width=True)
+    elif option == "Bar":
+        st.plotly_chart(population_bar, use_container_width=True)
 
-if option == 'Population':
-    st.plotly_chart(population, use_container_width=True)
+with tab_2:
+    option = st.selectbox(
+    "Select the type of graph to be displayed",
+    ('Scatter', 'Line', 'Bar'),
+    index=None,
+    placeholder='Choose an option',
+    key=2
+)
+    if option == "Scatter":
+        st.plotly_chart(urban_pop_scatter, use_container_width=True)
+    elif option == "Line":
+        st.plotly_chart(urban_pop_line, use_container_width=True)
+    elif option == "Bar":
+        st.plotly_chart(urban_pop_bar, use_container_width=True)
 
-elif option == 'Urban Population':
-    st.plotly_chart(urban_pop, use_container_width=True)
+with tab_3:
+    option = st.selectbox(
+    "Select the type of graph to be displayed",
+    ('Scatter', 'Line', 'Bar'),
+    index=None,
+    placeholder='Choose an option',
+    key=3
+)
+    if option == "Scatter":
+        st.plotly_chart(density_scatter, use_container_width=True)
+    elif option == "Line":
+        st.plotly_chart(density_line, use_container_width=True)
+    elif option == "Bar":
+        st.plotly_chart(density_bar, use_container_width=True)
 
-elif option == 'Population Density':
-    st.plotly_chart(density, use_container_width=True)
-
-elif option == 'Poverty':
-    st.plotly_chart(poverty, use_container_width=True)
+with tab_4:
+    option = st.selectbox(
+    "Select the type of graph to be displayed",
+    ('Scatter', 'Line', 'Bar'),
+    index=None,
+    placeholder='Choose an option',
+    key=4
+)
+    if option == "Scatter":
+        st.plotly_chart(poverty_scatter, use_container_width=True)
+    elif option == "Line":
+        st.plotly_chart(poverty_line, use_container_width=True)
+    elif option == "Bar":
+        st.plotly_chart(poverty_bar, use_container_width=True)

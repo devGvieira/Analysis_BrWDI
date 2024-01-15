@@ -66,7 +66,7 @@ with nature:
 with economy:
     st.header("Economy")
 
-    st.write("Given economy as being one of the main pillars for a nation to develop, analyzing it is essential for precisely understanding Brazil's development through the past years and, in order to do so, a page in this very analysis was dedicated to it. Hence, this page treats of the temporal evolution of Brazil's GDP, GNI and also income share held by the lowest 20% of the population ")
+    st.write("Given economy as being one of the main pillars for a nation to develop, analyzing it is essential for precisely understanding Brazil's development through the past years and, in order to do so, a page in this very analysis was dedicated to it. Hence, this page treats of the temporal evolution of Brazil's GDP, GNI and also income share held by the lowest 20% of the population. ")
 
 with population:
     st.header("Population")
