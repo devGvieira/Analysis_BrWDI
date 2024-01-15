@@ -72,3 +72,4 @@ with population:
     st.header("Population")
 
     st.write("The demography of a country is key for understanding its progress, a country that lacks social equality or a well distributed population will unequivocally face issues with poverty and real state. Keeping that in mind, this analysis brings a page related to the Brazilian population, wherein graphs are plotted to to better visualize the temporal behaviours of indicators as population density and poverty.")
+    

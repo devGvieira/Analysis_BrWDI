@@ -178,14 +178,22 @@ st.sidebar.write("This page displays the temporal evolution of Brazil's demograp
 
 st.header('Population Over Time')
 
-left_column, right_column = st.columns(2)
+option = st.selectbox(
+    "Select the graph to be displayed",
+    ('Population', 'Urban Population', 'Population Density', 'Poverty'),
+    index=None,
+    placeholder='Choose an option'
 
-left_column.plotly_chart(population, use_container_width=True)
+)
 
-right_column.plotly_chart(urban_pop, use_container_width=True)
+if option == 'Population':
+    st.plotly_chart(population, use_container_width=True)
 
-left_column_2, right_column_2 = st.columns(2)
+elif option == 'Urban Population':
+    st.plotly_chart(urban_pop, use_container_width=True)
 
-left_column_2.plotly_chart(poverty, use_container_width=True)
+elif option == 'Population Density':
+    st.plotly_chart(density, use_container_width=True)
 
-right_column_2.plotly_chart(density, use_container_width=True)
+elif option == 'Poverty':
+    st.plotly_chart(poverty, use_container_width=True)
